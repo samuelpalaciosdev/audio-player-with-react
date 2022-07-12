@@ -68,12 +68,27 @@ const AudioPlayer = () => {
   };
 
   const toPrevTrack = () => {
-    let currSong = songs[current];
+    let currSong = songs[current - 1];
     if (current - 1 < 0) {
       setCurrent(songs.length - 1);
     } else {
       setCurrent(current - 1);
     }
+    // By the above logic Set the audio src to the current song
+    setAudioRef({
+      src: `https://assets.breatheco.de/apis/sound/${currSong.url}`,
+    });
+    console.log(currSong.url);
+  };
+
+  const toNextTrack = () => {
+    let currSong = songs[current + 1];
+    if (current < songs.length - 1) {
+      setCurrent(current + 1);
+    } else {
+      setCurrent(0);
+    }
+    // By the above logic Set the audio src to the current song
     setAudioRef({
       src: `https://assets.breatheco.de/apis/sound/${currSong.url}`,
     });
@@ -129,13 +144,9 @@ const AudioPlayer = () => {
       <audio src={audioRef} ref={audioRef}></audio>
       <AudioControls
         isPlaying={isPlaying}
-        setIsPlaying={setIsPlaying}
-        audioRef={audioRef}
-        current={current}
-        setCurrent={setCurrent}
-        playOrPause={playOrPause}
         toPrevTrack={toPrevTrack}
-        songs={songs}
+        playOrPause={playOrPause}
+        toNextTrack={toNextTrack}
       />
     </div>
   );

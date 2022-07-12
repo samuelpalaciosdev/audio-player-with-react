@@ -2,12 +2,9 @@ import React from "react";
 
 const AudioControls = ({
   isPlaying,
-  setIsPlaying,
-  audioRef,
-  current,
-  setCurrent,
-  playOrPause,
   toPrevTrack,
+  playOrPause,
+  toNextTrack,
 }) => {
   return (
     <div className="footer-btns d-flex justify-content-center text-light sticky-bottom">
@@ -47,6 +44,9 @@ const AudioControls = ({
         type="button"
         className="player-btn next-btn player-btn--gray"
         aria-label="Next"
+        onClick={() => {
+          toNextTrack();
+        }}
       >
         <i className="fa-solid fa-caret-right fa-xl"></i>
       </button>
