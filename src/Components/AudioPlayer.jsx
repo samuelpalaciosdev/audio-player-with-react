@@ -41,10 +41,24 @@ const AudioPlayer = () => {
       });
   };
 
+  // Player functions
+
   return (
-    <>
-      <h1>Hey</h1>
-    </>
+    <div className="playlist-container">
+      <ul className="list-group text-light bg-dark p-3">
+        {!!songs &&
+          songs.length > 0 &&
+          songs.map((song, index) => {
+            return (
+              <li key={index} className="list-item d-flex flex-row fw-semibold">
+                <span>{song.id}</span>
+                <p>{song.name}</p>
+              </li>
+            );
+          })}
+        <h1>Hey</h1>
+      </ul>
+    </div>
   );
 };
 
