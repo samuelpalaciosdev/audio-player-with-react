@@ -10,6 +10,7 @@ const AudioPlayer = () => {
   const [current, setCurrent] = useState(null);
 
   let audioRef = useRef(null);
+  let isReady = useRef(false);
 
   const setAudioRef = ({ id, src }) => {
     audioRef.current.id = id;
@@ -53,46 +54,54 @@ const AudioPlayer = () => {
     }
   }, [isPlaying]);
 
-  /*Prev Track Function*/
-
-  // console.log(songUrl);
-
   useEffect(() => {
-    getSongUrl();
-  }, []);
+    audioRef.current.pause();
 
-  const getSongUrl = () => {
-    for (let i = 0; i < songs.length; i++) {
-      console.log(songs[i]);
+    if (isReady.current) {
+      audioRef.current.play();
+      setIsPlaying(true);
+    } else {
+      // Set the isReady ref as true for the next pass
+      isReady.current = true;
     }
-  };
+  }, [current]);
+
+  /*Prev Track Function*/
 
   const toPrevTrack = () => {
     let currSong = songs[current - 1];
     if (current - 1 < 0) {
       setCurrent(songs.length - 1);
+      // By the above logic Set the audio src to the current song
+      setAudioRef({
+        src: `https://assets.breatheco.de/apis/sound/${
+          songs[songs.length - 1].url
+        }`,
+      });
     } else {
       setCurrent(current - 1);
+      // By the above logic Set the audio src to the current song
+      setAudioRef({
+        src: `https://assets.breatheco.de/apis/sound/${currSong.url}`,
+      });
     }
-    // By the above logic Set the audio src to the current song
-    setAudioRef({
-      src: `https://assets.breatheco.de/apis/sound/${currSong.url}`,
-    });
-    console.log(currSong.url);
   };
 
   const toNextTrack = () => {
     let currSong = songs[current + 1];
     if (current < songs.length - 1) {
       setCurrent(current + 1);
+      // By the above logic Set the audio src to the current song
+      setAudioRef({
+        src: `https://assets.breatheco.de/apis/sound/${currSong.url}`,
+      });
     } else {
-      setCurrent(0);
+      setCurrent(1);
+      // By the above logic Set the audio src to the current song
+      setAudioRef({
+        src: `https://assets.breatheco.de/apis/sound/${songs[0].url}`,
+      });
     }
-    // By the above logic Set the audio src to the current song
-    setAudioRef({
-      src: `https://assets.breatheco.de/apis/sound/${currSong.url}`,
-    });
-    console.log(currSong.url);
   };
 
   /*
@@ -111,7 +120,7 @@ const AudioPlayer = () => {
 
   return (
     <div className="playlist-container">
-      <ul className="list-group text-light bg-dark p-3">
+      <ul className="list-group text-light bg-dark">
         {!!songs &&
           songs.length > 0 &&
           songs.map((song, index) => {
@@ -119,22 +128,17 @@ const AudioPlayer = () => {
               <>
                 <li
                   key={index}
-                  className="list-item d-flex flex-row fw-semibold"
-                  // When li elem clicked, set the audioRef to the current li song url
+                  className="list-item d-flex flex-row fw-semibold px-4"
                   onClick={() => {
                     playOrPause();
+                    // When li elem clicked, set the current state value to the li clicked
                     setCurrent(index);
+                    // When li elem clicked, set the audioRef to the current li song url
                     handleClick(`${song.url}`);
                   }}
                 >
                   <span className="song-id">{song.id}</span>
                   {song.name}
-                  <a
-                    href={`https://assets.breatheco.de/apis/sound/${song.url}`}
-                    target="_blank"
-                  >
-                    Click
-                  </a>
                 </li>
               </>
             );

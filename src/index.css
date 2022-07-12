@@ -17,6 +17,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-color);
 }
 
 code {
@@ -42,8 +43,12 @@ li {
   cursor: pointer;
   padding-left: 1rem;
   font-size: 1.2rem;
-  line-height: 2rem;
+  line-height: 2.2rem;
   border-bottom: 1px solid var(--gray-color);
+}
+
+.list-item:hover {
+  background-color: #4d4d4d;
 }
 
 .player-btn {
