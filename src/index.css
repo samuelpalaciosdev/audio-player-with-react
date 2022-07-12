@@ -1,13 +1,47 @@
+:root {
+  --bg-color: #18191b;
+  --gray-color: #808080;
+  --footer: #2c2c2d;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+li {
+  padding: 0.5rem 1rem;
+  list-style: none;
+}
+
+.playlist-container {
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
+.song-id {
+  width: 6%;
+}
+
+.list-item {
+  cursor: pointer;
+  padding-left: 1rem;
+  font-size: 1.2rem;
+  line-height: 2rem;
+  border-bottom: 1px solid var(--gray-color);
 }
