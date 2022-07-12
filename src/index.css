@@ -45,3 +45,24 @@ li {
   line-height: 2rem;
   border-bottom: 1px solid var(--gray-color);
 }
+
+.player-btn {
+  border-radius: 0.25rem;
+  color: #ffffff;
+  background: none;
+  border: none;
+}
+
+.player-btn--gray {
+  color: #2c2c2d;
+  background-color: #fefefe;
+}
+
+.player-btn:not(:last-child) {
+  margin-right: 2rem;
+}
+
+.footer-btns {
+  padding-block: 0.5rem;
+  background-color: var(--footer);
+}

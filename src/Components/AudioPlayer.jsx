@@ -1,4 +1,6 @@
+import { reference } from "@popperjs/core";
 import React, { useState, useRef, useEffect } from "react";
+import AudioControls from "./AudioControls";
 
 let api = "http://assets.breatheco.de/apis/sound/songs";
 
@@ -13,7 +15,6 @@ const AudioPlayer = () => {
     audioRef.current.id = id;
     audioRef.current.src = src;
   };
-
   // Run only once
   useEffect(() => {
     getSongs(api);
@@ -41,6 +42,15 @@ const AudioPlayer = () => {
       });
   };
 
+  const playOrPause = () => {
+    setIsPlaying(!isPlaying);
+    if (isPlaying) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
+  };
+
   //   for (let i = 0; i < songs.length; i++) {
   //     console.log(songs[i].url);
   //   }
@@ -55,7 +65,11 @@ const AudioPlayer = () => {
           songs.length > 0 &&
           songs.map((song, index) => {
             return (
-              <li key={index} className="list-item d-flex flex-row fw-semibold">
+              <li
+                key={index}
+                className="list-item d-flex flex-row fw-semibold"
+                onClick={playOrPause}
+              >
                 <span className="song-id">{song.id}</span>
                 {song.name}
                 <a
@@ -67,8 +81,9 @@ const AudioPlayer = () => {
               </li>
             );
           })}
-        <h1>Hey</h1>
       </ul>
+      <audio src={`${audioRef}`}></audio>
+      <AudioControls isPlaying={isPlaying} />
     </div>
   );
 };
