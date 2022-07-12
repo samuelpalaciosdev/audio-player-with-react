@@ -41,6 +41,11 @@ const AudioPlayer = () => {
       });
   };
 
+  //   for (let i = 0; i < songs.length; i++) {
+  //     console.log(songs[i].url);
+  //   }
+  //   console.log(songs[0].id);
+
   // Player functions
 
   return (
@@ -51,8 +56,14 @@ const AudioPlayer = () => {
           songs.map((song, index) => {
             return (
               <li key={index} className="list-item d-flex flex-row fw-semibold">
-                <span>{song.id}</span>
-                <p>{song.name}</p>
+                <span className="song-id">{song.id}</span>
+                {song.name}
+                <a
+                  href={`https://assets.breatheco.de/apis/sound/${song.url}`}
+                  target="_blank"
+                >
+                  Click
+                </a>
               </li>
             );
           })}
