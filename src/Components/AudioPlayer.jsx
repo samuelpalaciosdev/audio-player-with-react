@@ -8,6 +8,7 @@ const AudioPlayer = () => {
   const [songs, setSongs] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [current, setCurrent] = useState(null);
+  const [isActive, setIsActive] = useState(false);
 
   let audioRef = useRef(null);
   let isReady = useRef(false);
@@ -96,7 +97,7 @@ const AudioPlayer = () => {
         src: `https://assets.breatheco.de/apis/sound/${currSong.url}`,
       });
     } else {
-      setCurrent(1);
+      setCurrent(0);
       // By the above logic Set the audio src to the current song
       setAudioRef({
         src: `https://assets.breatheco.de/apis/sound/${songs[0].url}`,
@@ -118,6 +119,12 @@ const AudioPlayer = () => {
     setAudioRef({ src: `https://assets.breatheco.de/apis/sound/${url}` });
   };
 
+  // On click of li element set the isActive state to the current index
+
+  const toggleClass = (index) => {
+    setCurrent(index);
+  };
+
   return (
     <div className="playlist-container">
       <ul className="list-group text-light bg-dark">
@@ -128,13 +135,21 @@ const AudioPlayer = () => {
               <>
                 <li
                   key={index}
-                  className="list-item d-flex flex-row fw-semibold px-4"
+                  className={
+                    /* If isActive state equals the index being clicked, toggle the class, 
+                       in this case apply a lighter bg-color*/
+                    current === index
+                      ? `list-item d-flex flex-row fw-semibold px-4 selected`
+                      : `list-item d-flex flex-row fw-semibold px-4`
+                  }
                   onClick={() => {
                     playOrPause();
                     // When li elem clicked, set the current state value to the li clicked
                     setCurrent(index);
                     // When li elem clicked, set the audioRef to the current li song url
                     handleClick(`${song.url}`);
+                    // When li elem clicked, change the isActive state to change the bg-color of the li selected
+                    toggleClass(index);
                   }}
                 >
                   <span className="song-id">{song.id}</span>

@@ -47,7 +47,7 @@ li {
   border-bottom: 1px solid var(--gray-color);
 }
 
-.list-item:hover {
+.selected {
   background-color: #4d4d4d;
 }
 
