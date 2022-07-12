@@ -42,14 +42,26 @@ const AudioPlayer = () => {
       });
   };
 
-  const playOrPause = () => {
-    setIsPlaying(!isPlaying);
+  useEffect(() => {
     if (isPlaying) {
       audioRef.current.play();
     } else {
       audioRef.current.pause();
     }
+  }, [isPlaying]);
+
+  const playOrPause = () => {
+    setIsPlaying(!isPlaying);
   };
+
+  //   const playOrPause = () => {
+  //     setIsPlaying(!isPlaying);
+  //     if (isPlaying) {
+  //       audioRef.current.play();
+  //     } else {
+  //       audioRef.current.pause();
+  //     }
+  //   };
 
   //   for (let i = 0; i < songs.length; i++) {
   //     console.log(songs[i].url);
@@ -82,8 +94,16 @@ const AudioPlayer = () => {
             );
           })}
       </ul>
-      <audio src={`${audioRef}`}></audio>
-      <AudioControls isPlaying={isPlaying} />
+      <audio
+        src="https://assets.breatheco.de/apis/sound/files/cartoons/songs/simpsons.mp3"
+        ref={audioRef}
+      ></audio>
+      <AudioControls
+        isPlaying={isPlaying}
+        setIsPlaying={setIsPlaying}
+        audioRef={audioRef}
+        playOrPause={playOrPause}
+      />
     </div>
   );
 };

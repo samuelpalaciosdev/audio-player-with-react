@@ -1,6 +1,6 @@
 import React from "react";
 
-const AudioControls = ({ isPlaying }) => {
+const AudioControls = ({ isPlaying, setIsPlaying, audioRef, playOrPause }) => {
   return (
     <div className="footer-btns d-flex justify-content-center text-light sticky-bottom">
       <button
@@ -17,11 +17,17 @@ const AudioControls = ({ isPlaying }) => {
           type="button"
           className="player-btn pause-btn"
           aria-label="Pause"
+          onClick={playOrPause}
         >
-          <i class="fa-solid fa-pause fa-2x"></i>
+          <i className="fa-solid fa-pause fa-2x"></i>
         </button>
       ) : (
-        <button type="button" className="player-btn play-btn" aria-label="Play">
+        <button
+          type="button"
+          className="player-btn play-btn"
+          aria-label="Play"
+          onClick={playOrPause}
+        >
           <i className="fa-solid fa-play fa-2x"></i>
         </button>
       )}
