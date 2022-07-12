@@ -15,6 +15,7 @@ const AudioPlayer = () => {
     audioRef.current.id = id;
     audioRef.current.src = src;
   };
+
   // Run only once
   useEffect(() => {
     getSongs(api);
@@ -70,6 +71,11 @@ const AudioPlayer = () => {
 
   // Player functions
 
+  const handleClick = (url) => {
+    // playOrPause();
+    setAudioRef({ src: `https://assets.breatheco.de/apis/sound/${url}` });
+  };
+
   return (
     <div className="playlist-container">
       <ul className="list-group text-light bg-dark p-3">
@@ -80,7 +86,11 @@ const AudioPlayer = () => {
               <li
                 key={index}
                 className="list-item d-flex flex-row fw-semibold"
-                onClick={playOrPause}
+                // onClick={playOrPause}
+                onClick={() => {
+                  playOrPause();
+                  handleClick(`${song.url}`);
+                }}
               >
                 <span className="song-id">{song.id}</span>
                 {song.name}
@@ -94,10 +104,7 @@ const AudioPlayer = () => {
             );
           })}
       </ul>
-      <audio
-        src="https://assets.breatheco.de/apis/sound/files/cartoons/songs/simpsons.mp3"
-        ref={audioRef}
-      ></audio>
+      <audio src={audioRef} ref={audioRef}></audio>
       <AudioControls
         isPlaying={isPlaying}
         setIsPlaying={setIsPlaying}
