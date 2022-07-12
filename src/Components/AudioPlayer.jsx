@@ -5,7 +5,7 @@ import AudioControls from "./AudioControls";
 let api = "http://assets.breatheco.de/apis/sound/songs";
 
 const AudioPlayer = () => {
-  const [songs, setSongs] = useState(null);
+  const [songs, setSongs] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [current, setCurrent] = useState(null);
 
@@ -53,6 +53,33 @@ const AudioPlayer = () => {
     }
   }, [isPlaying]);
 
+  /*Prev Track Function*/
+
+  // console.log(songUrl);
+
+  useEffect(() => {
+    getSongUrl();
+  }, []);
+
+  const getSongUrl = () => {
+    for (let i = 0; i < songs.length; i++) {
+      console.log(songs[i]);
+    }
+  };
+
+  const toPrevTrack = () => {
+    let currSong = songs[current];
+    if (current - 1 < 0) {
+      setCurrent(songs.length - 1);
+    } else {
+      setCurrent(current - 1);
+    }
+    setAudioRef({
+      src: `https://assets.breatheco.de/apis/sound/${currSong.url}`,
+    });
+    console.log(currSong.url);
+  };
+
   /*
     Change isPlaying state value to its opossite everytime the play/pause button is clicked,
     an onClick is set on it with this funct on the AudioControls.jsx
@@ -74,24 +101,27 @@ const AudioPlayer = () => {
           songs.length > 0 &&
           songs.map((song, index) => {
             return (
-              <li
-                key={index}
-                className="list-item d-flex flex-row fw-semibold"
-                // When li elem clicked, set the audioRef to the current li song url
-                onClick={() => {
-                  playOrPause();
-                  handleClick(`${song.url}`);
-                }}
-              >
-                <span className="song-id">{song.id}</span>
-                {song.name}
-                <a
-                  href={`https://assets.breatheco.de/apis/sound/${song.url}`}
-                  target="_blank"
+              <>
+                <li
+                  key={index}
+                  className="list-item d-flex flex-row fw-semibold"
+                  // When li elem clicked, set the audioRef to the current li song url
+                  onClick={() => {
+                    playOrPause();
+                    setCurrent(index);
+                    handleClick(`${song.url}`);
+                  }}
                 >
-                  Click
-                </a>
-              </li>
+                  <span className="song-id">{song.id}</span>
+                  {song.name}
+                  <a
+                    href={`https://assets.breatheco.de/apis/sound/${song.url}`}
+                    target="_blank"
+                  >
+                    Click
+                  </a>
+                </li>
+              </>
             );
           })}
       </ul>
@@ -101,47 +131,14 @@ const AudioPlayer = () => {
         isPlaying={isPlaying}
         setIsPlaying={setIsPlaying}
         audioRef={audioRef}
+        current={current}
+        setCurrent={setCurrent}
         playOrPause={playOrPause}
+        toPrevTrack={toPrevTrack}
+        songs={songs}
       />
     </div>
   );
 };
 
 export default AudioPlayer;
-
-// import React, { useState, useRef, useEffect } from "react";
-
-// let api = "http://assets.breatheco.de/apis/sound/songs";
-
-// const AudioPlayer = () => {
-//   const [songs, setSongs] = useState(null);
-//   const [isPlaying, setIsPlaying] = useState(false);
-//   const [current, setCurrent] = useState(null);
-
-//   let audioRef = useRef(null);
-
-//   const setAudioRef = ({ id, src }) => {
-//     audioRef.current.src = src;
-//     audioRef.current.id = id;
-//   };
-
-//   const getSongs = (url) => {
-//     fetch(url, {
-//       method: "GET",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     })
-//       .then((response) => response.json())
-//       .then((data) => setSongs(data))
-//       .catch((error) => console.log(error));
-//   };
-
-//   return (
-//     <>
-//       <h1>Audio</h1>
-//     </>
-//   );
-// };
-
-// export default AudioPlayer;

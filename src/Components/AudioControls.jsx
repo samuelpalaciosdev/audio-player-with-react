@@ -1,12 +1,23 @@
 import React from "react";
 
-const AudioControls = ({ isPlaying, setIsPlaying, audioRef, playOrPause }) => {
+const AudioControls = ({
+  isPlaying,
+  setIsPlaying,
+  audioRef,
+  current,
+  setCurrent,
+  playOrPause,
+  toPrevTrack,
+}) => {
   return (
     <div className="footer-btns d-flex justify-content-center text-light sticky-bottom">
       <button
         type="button"
         className="player-btn prev-btn player-btn--gray"
         aria-label="Previous"
+        onClick={() => {
+          toPrevTrack();
+        }}
       >
         <i className="fa-solid fa-caret-left fa-xl"></i>
       </button>
