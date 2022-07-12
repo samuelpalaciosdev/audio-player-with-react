@@ -43,6 +43,8 @@ const AudioPlayer = () => {
       });
   };
 
+  // Play/Pause based on the isPlaying state
+
   useEffect(() => {
     if (isPlaying) {
       audioRef.current.play();
@@ -51,26 +53,15 @@ const AudioPlayer = () => {
     }
   }, [isPlaying]);
 
+  /*
+    Change isPlaying state value to its opossite everytime the play/pause button is clicked,
+    an onClick is set on it with this funct on the AudioControls.jsx
+  */
   const playOrPause = () => {
     setIsPlaying(!isPlaying);
   };
 
-  //   const playOrPause = () => {
-  //     setIsPlaying(!isPlaying);
-  //     if (isPlaying) {
-  //       audioRef.current.play();
-  //     } else {
-  //       audioRef.current.pause();
-  //     }
-  //   };
-
-  //   for (let i = 0; i < songs.length; i++) {
-  //     console.log(songs[i].url);
-  //   }
-  //   console.log(songs[0].id);
-
-  // Player functions
-
+  // On click of li element, change the audioRef so it can be played
   const handleClick = (url) => {
     // playOrPause();
     setAudioRef({ src: `https://assets.breatheco.de/apis/sound/${url}` });
@@ -86,7 +77,7 @@ const AudioPlayer = () => {
               <li
                 key={index}
                 className="list-item d-flex flex-row fw-semibold"
-                // onClick={playOrPause}
+                // When li elem clicked, set the audioRef to the current li song url
                 onClick={() => {
                   playOrPause();
                   handleClick(`${song.url}`);
@@ -104,6 +95,7 @@ const AudioPlayer = () => {
             );
           })}
       </ul>
+      {/* Use the audioRef value to play the current song */}
       <audio src={audioRef} ref={audioRef}></audio>
       <AudioControls
         isPlaying={isPlaying}
