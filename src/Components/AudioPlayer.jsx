@@ -8,7 +8,6 @@ const AudioPlayer = () => {
   const [songs, setSongs] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [current, setCurrent] = useState(null);
-  const [isActive, setIsActive] = useState(false);
 
   let audioRef = useRef(null);
   let isReady = useRef(false);
@@ -45,8 +44,7 @@ const AudioPlayer = () => {
       });
   };
 
-  // Play/Pause based on the isPlaying state
-
+  // Play/Pause based on the isPlaying state, only runs when the isPlaying state changes
   useEffect(() => {
     if (isPlaying) {
       audioRef.current.play();
@@ -55,6 +53,7 @@ const AudioPlayer = () => {
     }
   }, [isPlaying]);
 
+  // Handle setup when changing tracks, runs when the current state changes.
   useEffect(() => {
     audioRef.current.pause();
 
@@ -68,7 +67,6 @@ const AudioPlayer = () => {
   }, [current]);
 
   /*Prev Track Function*/
-
   const toPrevTrack = () => {
     let currSong = songs[current - 1];
     if (current - 1 < 0) {
@@ -88,6 +86,7 @@ const AudioPlayer = () => {
     }
   };
 
+  /*Next Track Function*/
   const toNextTrack = () => {
     let currSong = songs[current + 1];
     if (current < songs.length - 1) {
@@ -119,7 +118,7 @@ const AudioPlayer = () => {
     setAudioRef({ src: `https://assets.breatheco.de/apis/sound/${url}` });
   };
 
-  // On click of li element set the isActive state to the current index
+  // On click of li element set the current state to the current index
 
   const toggleClass = (index) => {
     setCurrent(index);
@@ -136,7 +135,7 @@ const AudioPlayer = () => {
                 <li
                   key={index}
                   className={
-                    /* If isActive state equals the index being clicked, toggle the class, 
+                    /* If current state equals the li index being clicked, toggle the class, 
                        in this case apply a lighter bg-color*/
                     current === index
                       ? `list-item d-flex flex-row fw-semibold px-4 selected`
@@ -148,7 +147,7 @@ const AudioPlayer = () => {
                     setCurrent(index);
                     // When li elem clicked, set the audioRef to the current li song url
                     handleClick(`${song.url}`);
-                    // When li elem clicked, change the isActive state to change the bg-color of the li selected
+                    // When li elem clicked, change the current state to the li elem clicked index
                     toggleClass(index);
                   }}
                 >
